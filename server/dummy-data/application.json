@@ -1,0 +1,66 @@
+[
+    {
+      "applicantId": "615fb6e1c6d18e6a13aa1f9c",
+      "jobId": "61621d34b6cde964126eefb6",
+      "recruiterId": "6163c0fc9dd55b6c92689d3a",
+      "status": "applied",
+      "dateOfApplication": "2022-02-14T00:00:00.000Z",
+      "sop": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor vitae nunc at molestie. Nullam dignissim elit in nibh blandit, eu dapibus ex faucibus. Donec laoreet, mauris eu pulvinar tempus, ex massa maximus justo, non rutrum turpis quam sed tellus."
+    },
+    {
+      "applicantId": "61618ab4891468c0a6d5e6f5",
+      "jobId": "61621d34b6cde964126eefb6",
+      "recruiterId": "6163c0fc9dd55b6c92689d3a",
+      "status": "shortlisted",
+      "dateOfApplication": "2022-03-01T00:00:00.000Z",
+      "sop": "Suspendisse in tellus vel velit fringilla elementum. Proin fermentum mauris ut tortor consectetur, vel sagittis tellus vestibulum. Duis hendrerit purus sit amet nibh sagittis lobortis. Nulla consequat massa turpis, vitae hendrerit velit facilisis sed."
+    },
+    {
+      "applicantId": "61617dd9c5f590bfe7c8ebd5",
+      "jobId": "6161f3f8313d3b23aa9b9a3b",
+      "recruiterId": "6163c0fc9dd55b6c92689d3a",
+      "status": "accepted",
+      "dateOfApplication": "2022-04-02T00:00:00.000Z",
+      "sop": "Vestibulum bibendum quam in tortor bibendum, at convallis mauris sollicitudin. Praesent auctor, erat vel efficitur rhoncus, nulla odio feugiat est, vitae euismod mauris mauris eu neque."
+    },
+    {
+      "applicantId": "6161746d7e49e90b4813dc21",
+      "jobId": "61621d34b6cde964126eefb6",
+      "recruiterId": "6163c0fc9dd55b6c92689d3a",
+      "status": "rejected",
+      "dateOfApplication": "2022-05-15T00:00:00.000Z",
+      "sop": "Integer eget ex in enim tincidunt finibus. Aenean vel molestie metus, sed laoreet ex. Sed euismod eleifend lectus, in bibendum metus tincidunt id."
+    },
+    {
+        "applicantId": "61621a2bb6cde964126eefb5",
+        "jobId": "6161f3f8313d3b23aa9b9a3b",
+        "recruiterId": "6163c0fc9dd55b6c92689d3a",
+        "status": "applied",
+        "dateOfApplication": "2022-06-10T00:00:00.000Z",
+        "sop": "Nunc vitae neque sit amet ex aliquet mollis. Morbi auctor enim non ultricies interdum. Aliquam ut est sapien."
+    },
+    {
+        "applicantId": "6163ca129dd55b6c92689d3b",
+        "jobId": "6161f3f8313d3b23aa9b9a3b",
+        "recruiterId": "6163c0fc9dd55b6c92689d3a",
+        "status": "shortlisted",
+        "dateOfApplication": "2022-07-05T00:00:00.000Z",
+        "sop": "Curabitur eleifend accumsan massa eu bibendum. Nulla sit amet erat vel magna congue pellentesque. Ut ullamcorper, justo vitae consectetur mattis, tortor leo volutpat mi, a pellentesque neque nulla sed augue."
+    },
+    {
+        "applicantId": "61618cfd0fd85fcb4b4ad02c",
+        "jobId": "61621d34b6cde964126eefb6",
+        "recruiterId": "6163c0fc9dd55b6c92689d3a",
+        "status": "accepted",
+        "dateOfApplication": "2022-08-20T00:00:00.000Z",
+        "sop": "Vestibulum euismod eros vel nibh lobortis, a pulvinar quam laoreet. Ut ut ultrices nulla, eget vestibulum dolor. Aliquam pharetra, dolor sit amet lobortis rutrum, neque augue fringilla enim, at dictum diam lacus vel massa."
+    },
+    {
+        "applicantId": "6161f0a6313d3b23aa9b9a3a",
+        "jobId": "61621d34b6cde964126eefb6",
+        "recruiterId": "6163c0fc9dd55b6c92689d3a",
+        "status": "rejected",
+        "dateOfApplication": "2022-09-12T00:00:00.000Z",
+        "sop": "Pellentesque eleifend est quis diam suscipit, eu finibus orci vulputate. Suspendisse bibendum magna sed eros laoreet, vitae malesuada est vulputate. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae."
+    }
+]

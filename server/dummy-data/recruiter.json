@@ -1,0 +1,116 @@
+{
+    "recruiterData" : [
+    {
+      "recruiterId": "614bf9b7f83b093a84c7a691",
+      "name": "John Doe",
+      "username": "johndoe",
+      "contactEmail": "johndoe@example.com",
+      "bio": "I'm a recruiter with 10 years of experience in the tech industry.",
+      "ats": "Greenhouse",
+      "roles": ["Engineering", "Product Management"],
+      "fund": "Venture Capital"
+    },
+    {
+      "recruiterId": "614bf9b7f83b093a84c7a692",
+      "name": "Jane Smith",
+      "username": "janesmith",
+      "contactEmail": "janesmith@example.com",
+      "bio": "I specialize in recruiting for startups in the fintech industry.",
+      "ats": "Lever",
+      "roles": ["Data Science", "Finance"],
+      "fund": "Angel"
+    },
+    {
+      "recruiterId": "614bf9b7f83b093a84c7a693",
+      "name": "Bob Johnson",
+      "username": "bobjohnson",
+      "contactEmail": "bobjohnson@example.com",
+      "bio": "I'm a seasoned recruiter with a passion for diversity and inclusion.",
+      "ats": "Workable",
+      "roles": ["Sales", "Marketing"],
+      "fund": "Private Equity"
+    },
+    {
+      "recruiterId": "614bf9b7f83b093a84c7a694",
+      "name": "Samantha Lee",
+      "username": "samanthalee",
+      "contactEmail": "samanthalee@example.com",
+      "bio": "I'm a tech recruiter with experience in both agency and in-house settings.",
+      "ats": "SmartRecruiters",
+      "roles": ["Design", "UX Research"],
+      "fund": "Corporate"
+    },
+    {
+      "recruiterId": "614bf9b7f83b093a84c7a695",
+      "name": "James Kim",
+      "username": "jameskim",
+      "contactEmail": "jameskim@example.com",
+      "bio": "I have a background in engineering and enjoy recruiting for technical roles.",
+      "ats": "Breezy HR",
+      "roles": ["DevOps", "Cybersecurity"],
+      "fund": "Seed"
+    },
+    {
+      "recruiterId": "614bf9b7f83b093a84c7a696",
+      "name": "Karen Rodriguez",
+      "username": "karenrodriguez",
+      "contactEmail": "karenrodriguez@example.com",
+      "bio": "I'm a recruiter with a focus on building strong employer branding.",
+      "ats": "Recruitee",
+      "roles": ["Human Resources", "Talent Acquisition"],
+      "fund": "Crowdfunding"
+    },
+    {
+        "recruiterId": "614bf9b7f83b093a84c7a698",
+        "name": "Emily Chen",
+        "username": "emilychen",
+        "contactEmail": "emilychen@example.com",
+        "bio": "I'm a recruiter who enjoys working with early-stage startups.",
+        "ats": "ApplicantPro",
+        "roles": ["Operations", "Supply Chain"],
+        "fund": "Series A"
+    },
+    {
+        "recruiterId": "614bf9b7f83b093a84c7a699",
+        "name": "David Kim",
+        "username": "davidkim",
+        "contactEmail": "davidkim@example.com",
+        "bio": "I'm a recruiter with a focus on technical sales roles.",
+        "ats": "JazzHR",
+        "roles": ["Sales Engineering", "Account Management"],
+        "fund": "Series B"
+    },
+    {
+        "recruiterId": "614bf9b7f83b093a84c7a69a",
+        "name": "Michelle Rodriguez",
+        "username": "michellerodriguez",
+        "contactEmail": "michellerodriguez@example.com",
+        "bio": "I'm a recruiter with experience in the education and non-profit sectors.",
+        "ats": "Recruiterbox",
+        "roles": ["Education", "Program Management"],
+        "fund": "Grant"
+    },
+    {
+        "recruiterId": "614bf9b7f83b093a84c7a69b",
+        "name": "Alex Nguyen",
+        "username": "alexnguyen",
+        "contactEmail": "alexnguyen@example.com",
+        "bio": "I'm a recruiter with experience in the hospitality and tourism industries.",
+        "ats": "iCIMS",
+        "roles": ["Hospitality", "Event Planning"],
+        "fund": "Bootstrapped"
+    },
+    {
+        "recruiterId": "614bf9b7f83b093a84c7a69c",
+        "name": "Rachel Lee",
+        "username": "rachellee",
+        "contactEmail": "rachellee@example.com",
+        "bio": "I'm a recruiter with a passion for connecting top talent with mission-driven organizations.",
+        "ats": "JobAdder",
+        "roles": ["Social Impact", "Non-profit"],
+        "fund": "Seed"
+    }
+    
+]
+}
+  
