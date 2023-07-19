@@ -1,6 +1,7 @@
 import LandingPage from './pages/LandingPage';
 import Navbar from './components/Navbar';
 import Route from './components/Route';
+import FindJobsPage from './pages/FindJobsPage';
 
 function App() {
   return(
@@ -9,6 +10,9 @@ function App() {
       <div>
         <Route path="/">
           <LandingPage />
+        </Route>
+        <Route path="/find-jobs">
+          <FindJobsPage />
         </Route>
       </div>
     </div>

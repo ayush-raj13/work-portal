@@ -17,7 +17,7 @@ function Footer() {
           </p>
 
           <a
-            href="#"
+            href="/"
             className="mt-8 inline-block rounded-full border border-white px-12 py-3 text-sm font-medium text-gray-200 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring active:bg-indigo-500"
           >
             Get Started
@@ -29,19 +29,19 @@ function Footer() {
         >
           <ul className="flex flex-wrap justify-center gap-4 text-xs lg:justify-end">
             <li>
-              <a href="#" className="text-gray-200 transition hover:opacity-75">
+              <a href="/" className="text-gray-200 transition hover:opacity-75">
                 Terms & Conditions
               </a>
             </li>
 
             <li>
-              <a href="#" className="text-gray-200 transition hover:opacity-75">
+              <a href="/" className="text-gray-200 transition hover:opacity-75">
                 Privacy Policy
               </a>
             </li>
 
             <li>
-              <a href="#" className="text-gray-200 transition hover:opacity-75">
+              <a href="/" className="text-gray-200 transition hover:opacity-75">
                 Cookies
               </a>
             </li>
