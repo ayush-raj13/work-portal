@@ -4,7 +4,7 @@ import { generateFromEmail } from 'unique-username-generator';
 import { wrapper as axiosCookieJarSupport } from 'axios-cookiejar-support';
 import tough from 'tough-cookie';
 import { faker } from '@faker-js/faker';
-import { skills, collegeList } from './constants.js';
+import { skills, collegeList, titleList, jobTypes, cityList } from './constants.js';
 
 const { log } = console;
 
@@ -46,6 +46,7 @@ async function createJobApplicant() {
   // api call to local host
   const jobApplicant = {
     name,
+    image: 'https://res.cloudinary.com/dhoysx4vk/image/upload/v1691127731/dpsbwwbaglgulq14dtaa.jpg',
     education: [
       {
         institutionName,
@@ -54,6 +55,62 @@ async function createJobApplicant() {
       },
     ],
     skills: [skill1, skill2, skill3],
+    experience: [
+      {
+        title: titleList[Math.floor(Math.random() * titleList.length)],
+        employmentType: jobTypes[Math.floor(Math.random() * jobTypes.length)],
+        companyName: 'ABC Tech',
+        location: cityList[Math.floor(Math.random() * cityList.length)],
+        startDate: '2020-01-01',
+        endDate: '2022-05-31',
+      },
+      {
+        title: titleList[Math.floor(Math.random() * titleList.length)],
+        employmentType: jobTypes[Math.floor(Math.random() * jobTypes.length)],
+        companyName: 'XYZ Solutions',
+        location: cityList[Math.floor(Math.random() * cityList.length)],
+        startDate: '2019-06-01',
+        endDate: '2019-12-31',
+      },
+    ],
+    projects: [
+      {
+        title: 'Sentiment Analysis Web App',
+        description: 'Developed a web application for sentiment analysis using Python and Flask.',
+        demoLink: 'https://example.com/sentiment-analysis-app',
+        repositoryLink: 'https://github.com/jane/sentiment-analysis-app',
+      },
+      {
+        title: 'E-commerce Website',
+        description: 'Worked on building an e-commerce website using React and Node.js.',
+        demoLink: 'https://example.com/e-commerce-website',
+        repositoryLink: 'https://github.com/jane/e-commerce-website',
+      },
+    ],
+    achievements: [
+      {
+        title: 'Top Performer Award',
+        description: 'Received the Top Performer Award for exceptional contributions to the team.',
+        certificate: 'https://example.com/top-performer-certificate',
+        link: '',
+      },
+      {
+        title: 'Data Science Specialization',
+        description: 'Completed an online specialization in Data Science from Coursera.',
+        certificate: 'https://example.com/data-science-certificate',
+        link: 'https://www.coursera.com/specializations/data-science',
+      },
+    ],
+    courses: [
+      {
+        title: 'Machine Learning Fundamentals',
+        certificate: 'https://example.com/machine-learning-certificate',
+      },
+      {
+        title: 'Data Visualization Techniques',
+        certificate: 'https://example.com/data-visualization-certificate',
+      },
+    ],
   };
   const res = await axios.post('http://localhost:5000/api/v1/jobapplicant/', jobApplicant, {
     jar: cookieJar, // tough.CookieJar or boolean

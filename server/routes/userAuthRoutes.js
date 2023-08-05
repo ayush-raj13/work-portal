@@ -36,4 +36,9 @@ router.route('/type/:type')
     });
   });
 
+router.route('/is-authenticated')
+  .get((req, res) => {
+    res.send(req.isAuthenticated());
+  });
+
 export default router;

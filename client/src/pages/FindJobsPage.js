@@ -20,6 +20,7 @@ function FindJobsPage() {
   const [keyword, setKeyword] = useState('');
   const [location, setLocation] = useState('');
   const [filter, setFilter] = useState({});
+  const [resetJobList, setResetJobList] = useState(false);
 
   const handleJobTypeChange = (event) => {
     setJobType(event.target.value);
@@ -56,7 +57,8 @@ function FindJobsPage() {
         minSalary,
         maxSalary,
         minDuration: 0,
-        sort
+        sort,
+        page: 1
       };
       if (!!duration && duration.value !== -1) {
         changedFilter.maxDuration = duration.value;
@@ -65,6 +67,9 @@ function FindJobsPage() {
         const { maxDuration, ...rest } = changedFilter
         changedFilter = rest;
         changedFilter.minDuration = 24;
+      }
+      if (JSON.stringify(changedFilter) !== JSON.stringify(filter)) {
+        setResetJobList(true);
       }
       setFilter(changedFilter);
       setShowModal(false);
@@ -95,8 +100,12 @@ function FindJobsPage() {
     const changedFilter = {
       ...filter,
       keyword,
-      location
+      location,
+      page: 1
     };
+    if (JSON.stringify(changedFilter) !== JSON.stringify(filter)) {
+      setResetJobList(true);
+    }
     setFilter(changedFilter);
   };
 
@@ -109,7 +118,7 @@ function FindJobsPage() {
   ];
 
   const modal = <Modal onClose={handleModalClose} actionBar={<div className="flex space-x-3"><Button success onClick={handleModalReset} className="text-white font-thin text-xl rounded-lg hover:font-extralight hover:scale-110 hover:shadow-inner hover:bg-green-800 transition duration-200">Clear</Button><Button onClick={handleModalClose} primary className="text-white font-thin text-xl rounded-lg hover:font-extralight hover:scale-110 hover:shadow-inner hover:bg-blue-800 transition duration-200">Submit</Button></div>}>
-     <div className="flex flex-col gap-2 sm:gap-6 p-2 sm:p-6 bg-gray-100 rounded-lg shadow-md">
+     <div className="flex flex-col gap-2 sm:gap-6 p-2 sm:p-6 bg-gray-100 rounded-lg">
       <div className="flex flex-col gap-2">
         <span className="text-lg font-semibold">Job Type:</span>
         <div className="flex flex-wrap gap-2">
@@ -142,6 +151,26 @@ function FindJobsPage() {
               className="mr-1"
             />
             Work From Home
+          </label>
+          <label className="flex items-center">
+            <input
+              type="checkbox"
+              value="Internship"
+              checked={jobType === 'Internship'}
+              onChange={handleJobTypeChange}
+              className="mr-1"
+            />
+            Internship
+          </label>
+          <label className="flex items-center">
+            <input
+              type="checkbox"
+              value="Trainee"
+              checked={jobType === 'Trainee'}
+              onChange={handleJobTypeChange}
+              className="mr-1"
+            />
+            Trainee
           </label>
         </div>
       </div>
@@ -278,7 +307,7 @@ function FindJobsPage() {
           points: 2
         }}
       />
-      <JobList filter={filter} />
+      <JobList filter={filter} setFilter={setFilter} resetJobList={resetJobList} setResetJobList={setResetJobList} />
       <Footer />
     </div>
   )

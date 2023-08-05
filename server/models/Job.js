@@ -98,7 +98,7 @@ const jobSchema = new mongoose.Schema(
     skillsets: [String],
     jobType: {
       type: String,
-      enum: ['Full Time', 'Part Time', 'Work From Home'],
+      enum: ['Full Time', 'Part Time', 'Work From Home', 'Internship', 'Trainee'],
       required: true,
     },
     duration: {

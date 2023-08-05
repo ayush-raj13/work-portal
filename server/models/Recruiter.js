@@ -41,6 +41,10 @@ const RecruiterSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    image: {
+      type: String,
+      required: true,
+    },
   },
   { collation: { locale: 'en' } },
 );

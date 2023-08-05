@@ -53,6 +53,7 @@ async function createRecruiter() {
 
   const recruiter = {
     name,
+    image: 'https://res.cloudinary.com/dhoysx4vk/image/upload/v1691127731/dpsbwwbaglgulq14dtaa.jpg',
     bio,
     ats,
     roles: [role1, role2],

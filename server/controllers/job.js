@@ -1,6 +1,7 @@
 /* eslint no-underscore-dangle: 0 */
 import Job from '../models/Job.js';
 import asyncWrapper from '../middlewares/async.js';
+import Recruiter from '../models/Recruiter.js';
 
 const { log } = console;
 
@@ -8,7 +9,7 @@ const getAllJobs = asyncWrapper(async (req, res) => {
   // eslint-disable-next-line max-len
   // localhost:5000/api/v1/jobs/?limit=2&next=590e9abd4abbf1165862d342&jobType=Full Time&minSalary=10000&maxSalary=50000&minDuration=3&maxDuration=6&location=Pune&keyword=backend&sort=-salary,duration
   // eslint-disable-next-line max-len
-  const { jobType, minSalary, maxSalary, minDuration, maxDuration, location, keyword, sort, limit } = req.query;
+  const { jobType, minSalary, maxSalary, minDuration, maxDuration, location, keyword, sort } = req.query;
   const queryObject = {};
 
   if (jobType) {
@@ -43,28 +44,30 @@ const getAllJobs = asyncWrapper(async (req, res) => {
     sortFix = '-_id';
   }
 
-  if (req.query.next) {
-    const jobs = await Job.find({
-      _id: { $lt: req.query.next },
-      $and: [{ $or: [{ city: new RegExp(location, 'i') }, { country: new RegExp(location, 'i') }] }, { $or: [{ title: new RegExp(keyword, 'i') }, { skillsets: { $all: [new RegExp(keyword, 'i')] } }] }],
-      ...queryObject,
-    }).populate('recruiterId').sort(sortFix).limit(limit);
+  let page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 10;
 
-    const next = jobs.length && jobs[jobs.length - 1]._id;
-    res.status(200).json({ jobs, next });
+  const skip = (page - 1) * limit;
+
+  const jobs = await Job.find({
+    $and: [{ $or: [{ city: new RegExp(location, 'i') }, { country: new RegExp(location, 'i') }] }, { $or: [{ title: new RegExp(keyword, 'i') }, { skillsets: { $all: [new RegExp(keyword, 'i')] } }] }],
+    ...queryObject,
+  }).populate('recruiterId')
+    .sort(sortFix)
+    .skip(skip)
+    .limit(limit);
+
+  if (jobs.length) {
+    page += 1;
   } else {
-    const jobs = await Job.find({
-      $and: [{ $or: [{ city: new RegExp(location, 'i') }, { country: new RegExp(location, 'i') }] }, { $or: [{ title: new RegExp(keyword, 'i') }, { skillsets: { $all: [new RegExp(keyword, 'i')] } }] }],
-      ...queryObject,
-    }).populate('recruiterId').sort(sortFix).limit(limit);
-
-    const next = jobs.length && jobs[jobs.length - 1]._id;
-    res.status(200).json({ jobs, next });
+    page = -1;
   }
+  res.status(200).json({ jobs, page });
 });
 
 const createJob = asyncWrapper(async (req, res) => {
-  const job = await Job.create({ recruiterId: req.user.id, ...req.body });
+  const { _id } = await Recruiter.findOne({ recruiterId: req.user.id });
+  const job = await Job.create({ recruiterId: _id, ...req.body });
 
   res.status(201).json({ job });
 });

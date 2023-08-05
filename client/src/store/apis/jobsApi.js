@@ -1,10 +1,19 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+// DEV ONLY!!!
+const pause = (duration) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, duration);
+  });
+};
+
 const jobsApi = createApi({
   reducerPath: 'jobs',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://192.168.1.5:5000/api/v1',
+    baseUrl: 'http://172.21.3.26:5000/api/v1',
     fetchFn: async (...args) => {
+      // REMOVE FOR PRODUCTION
+      await pause(3000);
       return fetch(...args);
     },
   }),
@@ -43,7 +52,7 @@ const jobsApi = createApi({
         query: (filter) => {
           return {
             url: '/jobs',
-            params: filter,
+            params: {limit: 10, ...filter},
             method: 'GET',
           };
         },

@@ -9,6 +9,7 @@ import { HiOutlineLocationMarker } from "react-icons/hi";
 
 const JobCard = ({job}) => {
   const {  title,
+    recruiterId,
     dateOfPosting,
     skillsets,
     deadline,
@@ -19,8 +20,11 @@ const JobCard = ({job}) => {
     city} = job
   return (
     <div className="bg-white shadow-md rounded-lg overflow-hidden">
-      <div className="bg-violet-800 text-white px-6 py-4 lg:flex lg:space-x-5">
-        <h2 className="text-lg font-semibold">{title}</h2>
+      <div className="bg-violet-800 text-white px-6 py-4 lg:flex lg:space-x-5 items-start">
+        <div className='flex flex-col justify-between'>
+          <h2 className="text-lg font-semibold">{title}</h2>
+          <div className='font-thin'>{recruiterId.name}&nbsp;&nbsp;<span className='text-xs font-medium mr-2 px-2.5 py-0.5 rounded bg-[#40128B] text-violet-100'>{recruiterId.username}</span></div>
+        </div>
         <div className='hidden lg:flex'>{skillsets.map((skill, index) => <span className='text-xs font-medium mr-2 px-2.5 py-0.5 rounded bg-violet-100 text-violet-900' key={index}>{skill}</span>)}</div>
       </div>
       <div className="grid grid-cols-1 gap-1 lg:grid-cols-3 lg:gap-3 sm:grid-cols-2 sm:gap-2 px-6 py-4 items-start">
@@ -49,7 +53,7 @@ const JobCard = ({job}) => {
         </div>
         <div className="flex items-center mb-4">
           <GiDuration className="h-5 w-5 text-violet-800 mr-2" />
-          <p className="text-black">Duration: {duration}</p>
+          <p className="text-black">Duration: {duration} months</p>
         </div>
         <div className="flex items-center mb-4">
           <GiReceiveMoney className="h-5 w-5 text-violet-800 mr-2" />
