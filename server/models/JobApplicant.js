@@ -10,6 +10,9 @@ const jobApplicantSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    headline: {
+      type: String,
+    },
     education: [
       {
         institutionName: {
@@ -140,7 +143,7 @@ const jobApplicantSchema = new mongoose.Schema(
 );
 
 // Define a virtual property for monthsOfExperience
-jobApplicantSchema.virtual('monthsOfExperience').get(() => {
+jobApplicantSchema.virtual('monthsOfExperience').get(function () {
   if (!this.experience || this.experience.length === 0) {
     return 0; // Return 0 if experience is not defined or empty
   }

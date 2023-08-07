@@ -9,7 +9,7 @@ export const getAllJobApplicants = asyncWrapper(async (req, res) => {
   // eslint-disable-next-line max-len
   // localhost:5000/api/v1/jobapplicants/?limit=2&next=590e9abd4abbf1165862d342&name=ayush&institutionName=iiit&startYear=2021&endYear=2025&keyword=backend&sort=-startYear
   // eslint-disable-next-line max-len
-  const { name, institutionName, startYear, endYear, sort, limit } = req.query;
+  const { name, keyword, institutionName, companyName, startYear, endYear, startDate, endDate, sort } = req.query;
   const queryObject = {};
 
   if (name) {
@@ -28,6 +28,18 @@ export const getAllJobApplicants = asyncWrapper(async (req, res) => {
     queryObject.education = { $elemMatch: { institutionName: new RegExp(institutionName, 'i'), startYear: { $gte: 1500 }, endYear: { $lte: 4000 } } };
   }
 
+  if (companyName && startDate && endDate) {
+    queryObject.experience = { $elemMatch: { companyName: new RegExp(companyName, 'i'), startDate, endDate } };
+  }
+
+  if (companyName && startDate && !endDate) {
+    queryObject.experience = { $elemMatch: { companyName: new RegExp(companyName, 'i'), startDate, endDate: { $lte: 4000 } } };
+  }
+
+  if (companyName && !startDate && !endDate) {
+    queryObject.experience = { $elemMatch: { companyName: new RegExp(companyName, 'i'), startDate: { $gte: 1500 }, endDate: { $lte: 4000 } } };
+  }
+
   let sortFix = '';
   if (sort) {
     sortFix = sort.replace(',', ' ');
@@ -36,26 +48,36 @@ export const getAllJobApplicants = asyncWrapper(async (req, res) => {
     sortFix = '-_id';
   }
 
-  if (req.query.next) {
-    const jobApplicants = await JobApplicant.find({
-      _id: { $lt: req.query.next },
-      ...queryObject,
-    }).populate('applicantId')
-      .sort(sortFix)
-      .limit(limit);
+  let page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 10;
 
-    const next = jobApplicants.length && jobApplicants[jobApplicants.length - 1]._id;
-    res.status(200).json({ jobApplicants, next });
+  const skip = (page - 1) * limit;
+
+  const jobApplicants = await JobApplicant.find({
+    $or: [
+      { skills: { $in: [new RegExp(keyword, 'i')] } },
+      { 'experience.title': { $regex: new RegExp(keyword, 'i') } },
+      { $or: [
+        { 'projects.title': { $regex: new RegExp(keyword, 'i') } },
+        { 'projects.description': { $regex: new RegExp(keyword, 'i') } },
+      ] },
+      { $or: [
+        { 'achievements.title': { $regex: new RegExp(keyword, 'i') } },
+        { 'achievements.description': { $regex: new RegExp(keyword, 'i') } },
+      ] },
+    ],
+    ...queryObject,
+  }).populate('applicantId')
+    .sort(sortFix)
+    .skip(skip)
+    .limit(limit);
+
+  if (jobApplicants.length) {
+    page += 1;
   } else {
-    const jobApplicants = await JobApplicant.find({
-      ...queryObject,
-    }).populate('applicantId')
-      .sort(sortFix)
-      .limit(limit);
-
-    const next = jobApplicants.length && jobApplicants[jobApplicants.length - 1]._id;
-    res.status(200).json({ jobApplicants, next });
+    page = -1;
   }
+  res.status(200).json({ jobApplicants, page });
 });
 
 export const createJobApplicant = asyncWrapper(async (req, res) => {

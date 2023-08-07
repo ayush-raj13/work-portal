@@ -1,11 +1,10 @@
 import Wave from "react-wavify";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import Footer from "../components/Footer";
 import Button from "../components/Button";
-import { BiSolidUserCircle } from "react-icons/bi";
-import Link from "../components/Link";
+import UserDrawerSidePanel from "../components/UserDrawerSidePanel";
 
 const boxVariant = {
   visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } },
@@ -43,44 +42,6 @@ const Box = ({ src, desc }) => {
 
 
 function LandingPage() {
-  const [showDropdownMenu, setShowDropdownMenu] = useState(false);
-  const divEl = useRef();
-
-  useEffect(() => {
-    const handler = (event) => {
-      if (!divEl.current) {
-        return
-      };
-      
-      if (!divEl.current.contains(event.target)) {
-        setShowDropdownMenu(false);
-      }
-    };
-
-    document.addEventListener('click', handler, true);
-
-    return () => {
-      document.removeEventListener('click', handler);
-    };
-  }, []);
-
-  const handleShowDropdownMenu = () => {
-    setShowDropdownMenu(!showDropdownMenu);
-  }
-
-  const dropdownMenu = 
-  <div class="absolute top-10 right-4 sm:top-14 sm:right-3 z-10 mt-2 w-24 sm:w-36 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-        <div class="py-1" role="none">
-            {/* Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" */}
-            <Link to="/login" className="text-gray-700 hover:bg-gray-200 block px-4 py-2 text-xs sm:text-sm" role="menuitem" tabindex="-1" id="menu-item-0">Login</Link>
-            <Link to="/register" className="text-gray-700 hover:bg-gray-200 block px-4 py-2 text-xs sm:text-sm" role="menuitem" tabindex="-1" id="menu-item-1">Rgister</Link>
-            <Link to="/profile" className="text-gray-700 hover:bg-gray-200 block px-4 py-2 text-xs sm:text-sm" role="menuitem" tabindex="-1" id="menu-item-2">Profile</Link>
-            <form method="POST" action="#" role="none">
-              <button type="submit" class="text-gray-700 hover:bg-gray-200 block w-full px-4 py-2 text-left text-xs sm:text-sm" role="menuitem" tabindex="-1" id="menu-item-3">Sign out</button>
-            </form>
-        </div>
-  </div>
-
   return (
     <>
     <div 
@@ -89,13 +50,7 @@ function LandingPage() {
         backgroundImage:`url(${process.env.PUBLIC_URL+ "/img/color-smoke-abstract-wallpaper-aesthetic-background-design.jpg"})`
       }}
     >
-      <div ref={divEl}>
-        <div onClick={handleShowDropdownMenu} className="absolute top-4 right-4 sm:top-2 sm:right-3 text-white hover:scale-110 transition duration-200 opacity-70 hover:opacity-100">
-          <BiSolidUserCircle className="w-6 h-6 sm:w-12 sm:h-12" />
-        </div>
-
-        {showDropdownMenu && dropdownMenu}
-      </div>
+      <UserDrawerSidePanel />
 
       <div className="relative pt-[25px] sm:pt-[122px] lg:pt-[127px] lg:mt-[50px] pb-12 sm:pb-[90px] lg:pb-[131px] flex flex-col lg:flex-row space-y-[60px] sm:space-y-[56px] lg:space-x-[386px] justify-between">
             {/* Content Container */}

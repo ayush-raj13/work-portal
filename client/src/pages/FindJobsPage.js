@@ -8,6 +8,7 @@ import Dropdown from "../components/Dropdown";
 import Wave from "react-wavify";
 import { useState } from "react";
 import JobList from "../components/JobList";
+import UserDrawerSidePanel from "../components/UserDrawerSidePanel";
 
 function FindJobsPage() {
   const [showModal, setShowModal] = useState(false);
@@ -272,6 +273,7 @@ function FindJobsPage() {
   
   return (
     <div className="flex flex-col justify-center items-center min-h-screen w-screen scroll-smooth">
+      <UserDrawerSidePanel />
       <div 
         className="flex flex-col space-y-5 sm:space-y-8 justify-center items-center w-screen bg-no-repeat bg-cover bg-center pb-40"
         style={{

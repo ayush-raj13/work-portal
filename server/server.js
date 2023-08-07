@@ -60,6 +60,12 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: url }),
+    cookie: {
+      httpOnly: false,
+      path: '/',
+      secure: false,
+      maxAge: 3600000 * 24 * 7,
+    },
   }),
 );
 

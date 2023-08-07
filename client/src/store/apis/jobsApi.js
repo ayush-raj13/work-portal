@@ -10,7 +10,8 @@ const pause = (duration) => {
 const jobsApi = createApi({
   reducerPath: 'jobs',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://172.21.3.26:5000/api/v1',
+    baseUrl: 'http://192.168.103.119:5000/api/v1',
+    credentials: "include",
     fetchFn: async (...args) => {
       // REMOVE FOR PRODUCTION
       await pause(3000);
@@ -32,7 +33,7 @@ const jobsApi = createApi({
       }),
       addJob: builder.mutation({
         invalidatesTags: (result, error, job) => {
-          return [{ type: 'Usersjobs', id: job.id }];
+          return [{ type: 'job', id: job.id }];
         },
         query: (job) => {
           return {

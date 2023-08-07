@@ -46,6 +46,7 @@ async function createJobApplicant() {
   // api call to local host
   const jobApplicant = {
     name,
+    headline: "Web Dev Intern || IT'25 IIIT BBSR",
     image: 'https://res.cloudinary.com/dhoysx4vk/image/upload/v1691127731/dpsbwwbaglgulq14dtaa.jpg',
     education: [
       {

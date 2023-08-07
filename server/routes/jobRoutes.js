@@ -9,7 +9,7 @@ import { ensureAuthenticated, ensureRecruiter } from '../controllers/authControl
 
 const router = express.Router({ mergeParams: true });
 
-router.route('/').get(getAllJobs).post(ensureRecruiter, createJob);
+router.route('/').get(ensureAuthenticated, getAllJobs).post(ensureRecruiter, createJob);
 router.route('/multiple').post(createJobs);
 router.route('/:id').get(ensureAuthenticated, getJob).patch(ensureRecruiter, updateJob).delete(ensureRecruiter, deleteJob);
 
