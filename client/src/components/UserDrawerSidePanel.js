@@ -4,9 +4,11 @@ import useAuthTokenContext from "../hooks/use-auth-token";
 import { useEffect, useRef, useState } from "react";
 import { Cookies } from "react-cookie";
 import Link from "./Link";
+import useNavigation from "../hooks/use-navigation";
 
 function UserDrawerSidePanel() {
   const { authToken } = useAuthTokenContext();
+  const { navigate, currentPath } = useNavigation();
 
   const [showDropdownMenu, setShowDropdownMenu] = useState(false);
   const divEl = useRef();
@@ -37,10 +39,13 @@ function UserDrawerSidePanel() {
 
   const handleLogout = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/v1/user/logout", { withCredentials: true });
+      const res = await axios.get("http://172.21.3.26:5000/api/v1/user/logout", { withCredentials: true });
       if (res.data.done) {
         cookies.remove('connect.sid', { path: '/' });
         setShowDropdownMenu(false);
+        if (currentPath !== "/") {
+          navigate("/");
+        }
       }
     } catch {
       alert("Error logging out!");

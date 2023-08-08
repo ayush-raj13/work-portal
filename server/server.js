@@ -65,9 +65,27 @@ app.use(
       path: '/',
       secure: false,
       maxAge: 3600000 * 24 * 7,
+      sameSite: 'none',
     },
   }),
 );
+
+app.use(async (req, res, next) => {
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, authorization',
+  );
+  res.header('Access-Control-Allow-Methods', 'GET,POST,DELETE,PUT,OPTIONS');
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+
+  try {
+    req.session.visits = req.session.visits ? req.session.visits + 1 : 1;
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+});
 
 app.use(passport.initialize());
 app.use(passport.session());

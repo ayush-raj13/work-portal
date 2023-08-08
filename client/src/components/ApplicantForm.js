@@ -64,7 +64,7 @@ const ApplicantForm = () => {
     });
 
     try {
-      await axios.post("http://localhost:5000/api/v1/jobapplicant", {name, image: imageUrl, education: educationFields, skills: skillList}, {withCredentials: true});
+      await axios.post("http://172.21.3.26:5000/api/v1/jobapplicant", {name, image: imageUrl, education: educationFields, skills: skillList}, {withCredentials: true});
       navigate("/find-jobs");
     } catch {
       alert("Error!");

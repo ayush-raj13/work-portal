@@ -1,29 +1,33 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import { Cookies } from "react-cookie";
 
 const AuthTokenContext = createContext();
+const cookies = new Cookies();
 
-function Provider({ children }){
-  const cookies = new Cookies();
+function Provider({ children }) {
   const [authToken, setAuthToken] = useState(cookies.get('connect.sid'));
 
-    const fetchAuthToken = setInterval(() => {
+  useEffect(() => {
+    const interval = setInterval(() => {
       const presenceCookie = cookies.get('connect.sid');
-      if (authToken !== presenceCookie ) {
+      if (authToken !== presenceCookie) {
         setAuthToken(presenceCookie);
       }
     }, 1000);
 
+    return () => clearInterval(interval);
+  }, [authToken]);
 
-    const valueToShare = {
-        authToken,
-        fetchAuthToken,
-    }
+  const valueToShare = {
+    authToken,
+  };
 
-    return (
-        <AuthTokenContext.Provider value={valueToShare}>{children}</AuthTokenContext.Provider>
-    )
+  return (
+    <AuthTokenContext.Provider value={valueToShare}>
+      {children}
+    </AuthTokenContext.Provider>
+  );
 }
 
-export {Provider};
+export { Provider };
 export default AuthTokenContext;

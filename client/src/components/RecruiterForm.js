@@ -77,7 +77,7 @@ const RecruiterForm = () => {
     });
 
     try {
-      await axios.post("http://localhost:5000/api/v1/recruiter", {name, image: imageUrl, contactEmail, bio, ats, roles: roleList, fund}, {withCredentials: true});
+      await axios.post("http://172.21.3.26:5000/api/v1/recruiter", {name, image: imageUrl, contactEmail, bio, ats, roles: roleList, fund}, {withCredentials: true});
       navigate("/hire-employees");
     } catch {
       alert("Error!");

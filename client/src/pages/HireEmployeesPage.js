@@ -50,7 +50,7 @@ function HireEmployeesPage() {
       >
         {/* SearchBar */}
         <div className="flex flex-col space-y-8  w-[85%] sm:w-[80%] mt-36">
-          <div className="font-barlow-condensed text-xl sm:text-2xl lg:text-4xl  text-[#D0D6F9] tracking-widest leading-[19.2px] sm:leading-6 lg:leading-[33.6px]">Find Your Dream Jobs Here</div>
+          <div className="font-barlow-condensed text-xl sm:text-2xl lg:text-4xl  text-[#D0D6F9] tracking-widest leading-[19.2px] sm:leading-6 lg:leading-[33.6px]">Discover the Perfect Fit</div>
           <div className="flex bg-white p-2 rounded-r-full rounded-l-full border-[1px] border-black">
             <label className="relative rounded-l-full w-[30%] focus-within:text-gray-600 block">
             <HiOutlineSearch className="pointer-events-none w-4 h-4 sm:w-6 sm:h-6 lg:w-8 lg:h-8 absolute top-1/2 transform -translate-y-1/2 left-2 lg:left-3" />

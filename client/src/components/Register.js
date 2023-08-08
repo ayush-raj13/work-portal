@@ -23,7 +23,7 @@ function Register() {
 
     const handleSubmit = async () => {
         try {
-            const res = await axios.post("http://localhost:5000/api/v1/user/register", {username, email, password}, { withCredentials: true });
+            const res = await axios.post("http://172.21.3.26:5000/api/v1/user/register", {username, email, password}, { withCredentials: true });
             if (res.data.done) {
                 navigate("/user-type-selection");
             } else if (res.data.msg === "duplicate") {

@@ -10,7 +10,7 @@ const pause = (duration) => {
 const jobsApi = createApi({
   reducerPath: 'jobs',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://192.168.103.119:5000/api/v1',
+    baseUrl: 'http://172.21.3.26:5000/api/v1',
     credentials: "include",
     fetchFn: async (...args) => {
       // REMOVE FOR PRODUCTION

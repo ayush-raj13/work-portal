@@ -18,7 +18,7 @@ function Login() {
 
   const handleSubmit = async () => {
     try {
-        const res = await axios.post("http://localhost:5000/api/v1/user/login", {username, password}, { withCredentials: true });
+        const res = await axios.post("http://172.21.3.26:5000/api/v1/user/login", {username, password}, { withCredentials: true });
         if (res.data.done) {
             navigate("/");
             while (currentPath === "/register") {

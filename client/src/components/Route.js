@@ -4,7 +4,7 @@ import axios from "axios";
 function Route({ path, children, requireAuth, requireApplicantAuth, requireRecruiterAuth, prevPath }) {
     const { currentPath, setCurrentPath } = useNavigation();
     const checkAuth = async () => {
-        const isAuthenticated = await axios.get(`http://localhost:5000/api/v1/user/is-authenticated`, { withCredentials: true });
+        const isAuthenticated = await axios.get(`http://172.21.3.26:5000/api/v1/user/is-authenticated`, { withCredentials: true });
         if (!isAuthenticated.data) {
             window.history.replaceState({ prevUrl: window.location.href }, "", "/login");
             setCurrentPath(window.location.pathname);
@@ -12,7 +12,7 @@ function Route({ path, children, requireAuth, requireApplicantAuth, requireRecru
     }
 
     const checkApplicantAuth = async () => {
-        const isAuthenticated = await axios.get(`http://localhost:5000/api/v1/jobapplicant/is-authenticated`, { withCredentials: true });
+        const isAuthenticated = await axios.get(`http://172.21.3.26:5000/api/v1/jobapplicant/is-authenticated`, { withCredentials: true });
         if (!isAuthenticated.data) {
             window.history.replaceState({ prevUrl: window.location.href }, "", "/login");
             setCurrentPath(window.location.pathname);
@@ -20,7 +20,7 @@ function Route({ path, children, requireAuth, requireApplicantAuth, requireRecru
     }
 
     const checkRecruiterAuth = async () => {
-        const isAuthenticated = await axios.get(`http://localhost:5000/api/v1/recruiter/is-authenticated`, { withCredentials: true });
+        const isAuthenticated = await axios.get(`http://172.21.3.26:5000/api/v1/recruiter/is-authenticated`, { withCredentials: true });
         if (!isAuthenticated.data) {
             window.history.replaceState({ prevUrl: window.location.href }, "", "/login");
             setCurrentPath(window.location.pathname);

@@ -7,7 +7,7 @@ function UserTypeSelection() {
 
   const setApplicant = async () => {
     try {
-      const res = await axios.patch("http://localhost:5000/api/v1/user/type/applicant", {}, { withCredentials: true });
+      const res = await axios.patch("http://172.21.3.26:5000/api/v1/user/type/applicant", {}, { withCredentials: true });
       if (res.data.type === "applicant") {
         navigate("/applicant-form");
       }
@@ -18,7 +18,7 @@ function UserTypeSelection() {
 
   const setRecruiter = async () => {
     try {
-      const res = await axios.patch("http://localhost:5000/api/v1/user/type/recruiter", {}, { withCredentials: true });
+      const res = await axios.patch("http://172.21.3.26:5000/api/v1/user/type/recruiter", {}, { withCredentials: true });
       if (res.data.type === "recruiter") {
         navigate("/recruiter-form");
       }
