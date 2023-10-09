@@ -52,7 +52,7 @@ const register = async (req, res) => {
         res.cookie('user', JSON.stringify({ id: req.user.id, userType: req.user.userType }), {
           maxAge: 3600000 * 24 * 7,
           // expires works the same as the maxAge
-          secure: false,
+          secure: true,
           httpOnly: false,
           sameSite: 'none',
         });
