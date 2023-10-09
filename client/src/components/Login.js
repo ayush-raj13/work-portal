@@ -4,7 +4,7 @@ import axios from "axios";
 import useNavigation from "../hooks/use-navigation";
 
 function Login() {
-  const { currentPath, navigate } = useNavigation();
+  const { navigate } = useNavigation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -18,12 +18,10 @@ function Login() {
 
   const handleSubmit = async () => {
     try {
-        const res = await axios.post("http://172.21.3.26:5000/api/v1/user/login", {username, password}, { withCredentials: true });
+        const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/v1/user/login`, {username, password}, { withCredentials: true });
         if (res.data.done) {
             navigate("/");
-            while (currentPath === "/register") {
-              navigate("/");
-            }
+            window.location.reload();
         }
     } catch {
         alert("Error!");

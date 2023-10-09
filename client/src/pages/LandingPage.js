@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import Footer from "../components/Footer";
 import Button from "../components/Button";
 import UserDrawerSidePanel from "../components/UserDrawerSidePanel";
-import useAuthTokenContext from "../hooks/use-auth-token";
 
 const boxVariant = {
   visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } },
@@ -43,10 +42,8 @@ const Box = ({ src, desc }) => {
 
 
 function LandingPage() {
-  const { authToken } = useAuthTokenContext();
   return (
     <>
-    <p>authToken: {authToken}</p>
     <div 
       className="flex justify-center items-center min-h-screen w-screen bg-no-repeat bg-cover bg-center scroll-smooth"
       style={{

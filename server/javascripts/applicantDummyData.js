@@ -26,7 +26,7 @@ async function createUser() {
     email,
     password: 'password',
   };
-  const res = await axios.post('http://localhost:5000/api/v1/user/register', user, {
+  const res = await axios.post(`${process.env.SERVER_URL}/api/v1/user/register`, user, {
     jar: cookieJar, // tough.CookieJar or boolean
     withCredentials: true, // If true, send cookie stored in jar
   });
@@ -113,7 +113,7 @@ async function createJobApplicant() {
       },
     ],
   };
-  const res = await axios.post('http://localhost:5000/api/v1/jobapplicant/', jobApplicant, {
+  const res = await axios.post(`${process.env.SERVER_URL}/api/v1/jobapplicant/`, jobApplicant, {
     jar: cookieJar, // tough.CookieJar or boolean
     withCredentials: true, // If true, send cookie stored in jar
   });
@@ -122,7 +122,7 @@ async function createJobApplicant() {
 }
 
 async function logout() {
-  const res = await axios.get('http://localhost:5000/api/v1/user/logout', {
+  const res = await axios.get(`${process.env.SERVER_URL}/api/v1/user/logout`, {
     jar: cookieJar, // tough.CookieJar or boolean
     withCredentials: true, // If true, send cookie stored in jar
   });

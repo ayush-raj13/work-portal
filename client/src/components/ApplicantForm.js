@@ -5,7 +5,6 @@ import useNavigation from '../hooks/use-navigation';
 const ApplicantForm = () => {
   const [name, setName] = useState('');
   const [image, setImage] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
   const [skills, setSkills] = useState([]);
   const [educationFields, setEducationFields] = useState([{ institutionName: '', startYear: '', endYear: '' }]);
 
@@ -38,6 +37,7 @@ const ApplicantForm = () => {
   }
 
   const handleSubmit = async (event) => {
+    let imageUrl = '';
     const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dhoysx4vk/upload';
     const CLOUDINARY_UPLOAD_PRESET = 'work-portal';
 
@@ -53,7 +53,7 @@ const ApplicantForm = () => {
         },
         data: formData
     }).then((res) => {
-        setImageUrl(res.data.secure_url);
+      imageUrl = res.data.secure_url;
     }).catch((err) => {
         alert("Error in uploading image!");
         return;
@@ -64,7 +64,7 @@ const ApplicantForm = () => {
     });
 
     try {
-      await axios.post("http://172.21.3.26:5000/api/v1/jobapplicant", {name, image: imageUrl, education: educationFields, skills: skillList}, {withCredentials: true});
+      await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/v1/jobapplicant`, {name, image: imageUrl, education: educationFields, skills: skillList}, {withCredentials: true});
       navigate("/find-jobs");
     } catch {
       alert("Error!");

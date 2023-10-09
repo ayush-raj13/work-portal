@@ -13,7 +13,7 @@ const router = express.Router({ mergeParams: true });
 router.route('/').get(ensureAuthenticated, getAllJobApplicants).post(ensureUser, createJobApplicant);
 router.route('/multiple').post(createJobApplicants);
 router.route('/is-authenticated').get(isAuthenticated);
-router.route('/:id').get(ensureAuthenticated, getJobApplicant).patch(ensureUser, updateJobApplicant);
+router.route('/:id').get(ensureAuthenticated, getJobApplicant).put(ensureUser, updateJobApplicant);
 
 export default router;
 

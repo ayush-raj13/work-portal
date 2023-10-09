@@ -10,7 +10,8 @@ const pause = (duration) => {
 const jobApplicantApi = createApi({
   reducerPath: 'jobApplicant',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://172.21.3.26:5000/api/v1',
+    baseUrl: `${process.env.REACT_APP_SERVER_URL}/api/v1`,
+    credentials: "include",
     fetchFn: async (...args) => {
       // REMOVE FOR PRODUCTION
       await pause(3000);
@@ -42,10 +43,22 @@ const jobApplicantApi = createApi({
           };
         },
       }),
+      updateJobApplicant: builder.mutation({
+        invalidatesTags: (result, error, jobApplicant) => {
+          return [{ type: 'jobApplicant', id: jobApplicant.id }];
+        },
+        query: (jobApplicant) => {
+          return {
+            url: `/jobapplicant/${jobApplicant.id}`,
+            method: 'PUT',
+            body: jobApplicant,
+          };
+        },
+      }),
       fetchJobApplicants: builder.query({
         providesTags: (result, error) => {
-          const tags = result.jobs.map((job) => {
-            return { type: 'jobApplicant', id: job.id };
+          const tags = result.jobApplicants.map((applicant) => {
+            return { type: 'jobApplicant', id: applicant._id };
           });
           return tags;
         },
@@ -64,6 +77,7 @@ const jobApplicantApi = createApi({
 export const {
   useFetchJobApplicantsQuery,
   useAddJobApplicantMutation,
+  useUpdateJobApplicantMutation,
   useRemoveJobApplicantMutation,
 } = jobApplicantApi;
 export { jobApplicantApi };

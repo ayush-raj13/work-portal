@@ -5,11 +5,11 @@ const AuthTokenContext = createContext();
 const cookies = new Cookies();
 
 function Provider({ children }) {
-  const [authToken, setAuthToken] = useState(cookies.get('connect.sid'));
+  const [authToken, setAuthToken] = useState(cookies.get('user'));
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const presenceCookie = cookies.get('connect.sid');
+      const presenceCookie = cookies.get('user');
       if (authToken !== presenceCookie) {
         setAuthToken(presenceCookie);
       }

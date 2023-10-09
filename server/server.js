@@ -4,6 +4,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import session from 'express-session';
+import cookieParser from 'cookie-parser';
 import MongoStore from 'connect-mongo';
 import passport from 'passport';
 import mongoose from 'mongoose';
@@ -39,10 +40,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: 'http://localhost:3000', // <-- location of the react app were connecting to
+    origin: process.env.CLIENT_URL, // <-- location of the react app were connecting to
     credentials: true,
   }),
 );
+app.use(cookieParser());
 
 app.get('/', (req, res) => {
   res.send('welcome');
@@ -61,7 +63,7 @@ app.use(
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: url }),
     cookie: {
-      httpOnly: false,
+      httpOnly: true,
       path: '/',
       secure: false,
       maxAge: 3600000 * 24 * 7,
@@ -77,7 +79,7 @@ app.use(async (req, res, next) => {
     'Origin, X-Requested-With, Content-Type, Accept, authorization',
   );
   res.header('Access-Control-Allow-Methods', 'GET,POST,DELETE,PUT,OPTIONS');
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.header('Access-Control-Allow-Origin', process.env.CLIENT_URL);
 
   try {
     req.session.visits = req.session.visits ? req.session.visits + 1 : 1;

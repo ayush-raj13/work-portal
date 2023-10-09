@@ -18,6 +18,13 @@ const signin = async (req, res) => {
       /* eslint-enable no-console */
     } else {
       passport.authenticate('userlocal')(req, res, () => {
+        res.cookie('user', JSON.stringify({ id: req.user.id, userType: req.user.userType }), {
+          maxAge: 3600000 * 24 * 7,
+          // expires works the same as the maxAge
+          secure: false,
+          httpOnly: false,
+          sameSite: 'none',
+        });
         res.status(200).send({ done: true });
       });
     }
@@ -42,6 +49,13 @@ const register = async (req, res) => {
       /* eslint-enable no-console */
     } else {
       passport.authenticate('userlocal')(req, res, () => {
+        res.cookie('user', JSON.stringify({ id: req.user.id, userType: req.user.userType }), {
+          maxAge: 3600000 * 24 * 7,
+          // expires works the same as the maxAge
+          secure: false,
+          httpOnly: false,
+          sameSite: 'none',
+        });
         res.status(200).send({ done: true });
       });
     }
@@ -50,7 +64,7 @@ const register = async (req, res) => {
 
 export const multipleRegister = asyncWrapper(async (req, res) => {
   for (let i = 0; i < req.body.length; i += 1) {
-    await axios.post('http://localhost:5000/api/v1/user/register', req.body[i])
+    await axios.post(`${process.env.SERVER_URL}/api/v1/user/register`, req.body[i])
       .then((response) => {
         log(response);
       })

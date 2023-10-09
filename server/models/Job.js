@@ -96,6 +96,9 @@ const jobSchema = new mongoose.Schema(
       ],
     },
     skillsets: [String],
+    responsibilities: [String],
+    qualifications: [String],
+    preferredQualifications: [String],
     jobType: {
       type: String,
       enum: ['Full Time', 'Part Time', 'Work From Home', 'Internship', 'Trainee'],
@@ -108,6 +111,22 @@ const jobSchema = new mongoose.Schema(
         {
           validator: Number.isInteger,
           msg: 'Duration should be an integer',
+        },
+      ],
+    },
+    experience: {
+      type: Number,
+      required: true,
+      validate: [
+        {
+          validator: Number.isInteger,
+          msg: 'It should be no',
+        },
+        {
+          validator(value) {
+            return value >= 0;
+          },
+          msg: 'Experience should be positive',
         },
       ],
     },

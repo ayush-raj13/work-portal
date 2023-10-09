@@ -28,7 +28,7 @@ const jobApplicantSchema = new mongoose.Schema(
         },
         endYear: {
           type: Number,
-          max: new Date().getFullYear(),
+          max: new Date().getFullYear() + 20,
           validate: [
             { validator: Number.isInteger, msg: 'Year should be an integer' },
             {

@@ -39,9 +39,10 @@ function UserDrawerSidePanel() {
 
   const handleLogout = async () => {
     try {
-      const res = await axios.get("http://172.21.3.26:5000/api/v1/user/logout", { withCredentials: true });
+      const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/v1/user/logout`, { withCredentials: true });
       if (res.data.done) {
         cookies.remove('connect.sid', { path: '/' });
+        cookies.remove('user', { path: '/' });
         setShowDropdownMenu(false);
         if (currentPath !== "/") {
           navigate("/");

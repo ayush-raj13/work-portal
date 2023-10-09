@@ -4,6 +4,7 @@ import Route from './components/Route';
 import FindJobsPage from './pages/FindJobsPage';
 import AuthPage from './pages/AuthPage';
 import HireEmployeesPage from './pages/HireEmployeesPage';
+import ProfilePage from './pages/ProfilePage';
 
 function App() {
   return(
@@ -49,6 +50,16 @@ function App() {
           <Navbar />
           <div>
             <HireEmployeesPage />
+          </div>
+        </Route>
+        <Route path="/profile" requireAuth>
+          <div>
+            <ProfilePage />
+          </div>
+        </Route>
+        <Route path={/^\/find-jobs\/[^/]+$/} requireAuth>
+          <div>
+            <h1>Hello</h1>
           </div>
         </Route>
     </div>

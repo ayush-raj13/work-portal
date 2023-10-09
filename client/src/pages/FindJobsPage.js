@@ -9,12 +9,14 @@ import Wave from "react-wavify";
 import { useState } from "react";
 import JobList from "../components/JobList";
 import UserDrawerSidePanel from "../components/UserDrawerSidePanel";
+import MultiRangeSlider from "../components/multiRangeSlider/multiRangeSlider";
 
 function FindJobsPage() {
   const [showModal, setShowModal] = useState(false);
   const [jobType, setJobType] = useState('');
   const [minSalary, setMinSalary] = useState(0);
   const [maxSalary, setMaxSalary] = useState(1000000);
+  const [minExperience, setMinExperience] = useState(0);
   const [duration, setDuration] = useState(null);
   const [sortOption, setSortOption] = useState('');
   const [sortOrder, setSortOrder] = useState('');
@@ -25,14 +27,6 @@ function FindJobsPage() {
 
   const handleJobTypeChange = (event) => {
     setJobType(event.target.value);
-  };
-
-  const handleMinSalaryChange = (event) => {
-    setMinSalary(parseInt(event.target.value));
-  };
-
-  const handleMaxSalaryChange = (event) => {
-    setMaxSalary(parseInt(event.target.value));
   };
 
   const handleSortOptionChange = (event) => {
@@ -49,7 +43,7 @@ function FindJobsPage() {
 
   const handleModalClose = () => {
     let sort = sortOption;
-      if (sortOrder === "decreasing") {
+      if (sortOrder === "decreasing" && sortOption !== "") {
         sort = `-${sortOption}`
       }
       let changedFilter = {
@@ -57,6 +51,7 @@ function FindJobsPage() {
         jobType,
         minSalary,
         maxSalary,
+        minExperience,
         minDuration: 0,
         sort,
         page: 1
@@ -83,6 +78,7 @@ function FindJobsPage() {
     setDuration(null);
     setSortOption('');
     setSortOrder('');
+    setMinExperience(0);
   }
 
   const handleDurationChange = (option) => {
@@ -96,6 +92,11 @@ function FindJobsPage() {
   const handleLocationChange = (event) => {
     setLocation(event.target.value);
   };
+
+  const handleMinExperienceChange = (event) => {
+    const value = parseInt(event.target.value) || 0;
+    setMinExperience(value);
+  }
 
   const handleSearch = () => {
     const changedFilter = {
@@ -122,7 +123,7 @@ function FindJobsPage() {
      <div className="flex flex-col gap-2 sm:gap-6 p-2 sm:p-6 bg-gray-100 rounded-lg">
       <div className="flex flex-col gap-2">
         <span className="text-lg font-semibold">Job Type:</span>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-4">
           <label className="flex items-center">
             <input
               type="checkbox"
@@ -178,26 +179,16 @@ function FindJobsPage() {
 
       <div className="flex flex-col gap-2">
         <span className="text-lg font-semibold">Salary:</span>
-        <div className="flex justify-between text-sm">
-          <span>₹{minSalary}</span>
-          <span>₹{maxSalary}</span>
-        </div>
-        <input
-          type="range"
-          min="0"
-          max={maxSalary}
-          value={minSalary}
-          onChange={handleMinSalaryChange}
-          className="rounded-lg"
-        />
-        <input
-          type="range"
+        <MultiRangeSlider
           min={minSalary}
-          max="1000000"
-          value={maxSalary}
-          onChange={handleMaxSalaryChange}
-          className="rounded-lg"
+          max={maxSalary}
+          onChange={({ min, max }) => {setMaxSalary(max); setMinSalary(min);}}
         />
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <label className="block text-sm sm:text-base text-gray-700">Minimum Experience</label>
+        <input value={minExperience || ''} onChange={handleMinExperienceChange} className="w-48 px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300 text-sm sm:text-base" type="number" placeholder="Experience" />
       </div>
 
       <div className="flex flex-col gap-2">
@@ -207,7 +198,7 @@ function FindJobsPage() {
 
       <div className="flex flex-col gap-2">
         <span className="text-lg font-semibold">Sort:</span>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-4">
           <label className="flex items-center">
             <input
               type="checkbox"
@@ -238,12 +229,22 @@ function FindJobsPage() {
             />
             Date of Posting
           </label>
+          <label className="flex items-center">
+            <input
+              type="checkbox"
+              value="experience"
+              checked={sortOption === 'experience'}
+              onChange={handleSortOptionChange}
+              className="mr-1"
+            />
+            Experience
+          </label>
         </div>
       </div>
 
       <div className="flex flex-col gap-2">
         <span className="text-lg font-semibold">Sort Order:</span>
-        <div className="flex gap-2">
+        <div className="flex gap-4">
           <label className="flex items-center">
             <input
               type="radio"
@@ -289,8 +290,8 @@ function FindJobsPage() {
             <input type="text" placeholder="Keyword" value={keyword} onChange={handleKeywordChange} className="ml-4 sm:ml-8 lg:ml-12 rounded-l-full w-full placeholder-text-xs sm:placeholder-text-xl lg:placeholder-text-2xl text-xs sm:text-xl lg:text-2xl sm:p-2 focus:ring-0 border-0 border-r-[1px] placeholder-black focus:placeholder-gray-600" />
             </label>
             <label className="relative w-[70%] focus-within:text-gray-600 block">
-            <HiOutlineLocationMarker className="pointer-events-none w-4 h-4 sm:w-6 sm:h-6 lg:w-8 lg:h-8 absolute top-1/2 transform -translate-y-1/2 left-5 sm:left-[36px] lg:left-[52px]" />
-            <input type="text" placeholder="Add Country or City" value={location} onChange={handleLocationChange} className="ml-[28px] sm:ml-[54px] lg:ml-[84px] w-[84%] sm:w-[84%] lg:w-[86%] placeholder-text-xs sm:placeholder-text-xl lg:placeholder-text-2xl text-xs sm:text-xl lg:text-2xl sm:p-2 focus:ring-0 border-0 placeholder-black focus:placeholder-gray-600" />
+            <HiOutlineLocationMarker className="pointer-events-none w-4 h-4 sm:w-6 sm:h-6 lg:w-8 lg:h-8 absolute top-1/2 transform -translate-y-1/2 left-[18px] sm:left-[36px] lg:left-[52px]" />
+            <input type="text" placeholder="Add Country or City" value={location} onChange={handleLocationChange} className="ml-[25px] sm:ml-[54px] lg:ml-[84px] w-[84%] sm:w-[84%] lg:w-[86%] placeholder-text-xs sm:placeholder-text-xl lg:placeholder-text-2xl text-xs sm:text-xl lg:text-2xl sm:p-2 focus:ring-0 border-0 placeholder-black focus:placeholder-gray-600" />
             </label>
             <Button onClick={handleSearch} className="rounded-full bg-violet-600 hover:shadow-inner hover:bg-violet-800 text-white px-4 sm:px-6 lg:px-8 text-xs sm:text-lg lg:text-xl font-semibold transition duration-200">Search</Button>
           </div>

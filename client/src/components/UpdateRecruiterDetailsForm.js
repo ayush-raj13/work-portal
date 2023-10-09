@@ -1,23 +1,33 @@
 import axios from 'axios';
-import React, { useState } from 'react';
-import useNavigation from '../hooks/use-navigation';
+import React, { useEffect, useState } from 'react';
+import { RxCross2 } from "react-icons/rx";
+import { useUpdateRecruiterMutation } from '../store';
 
-const RecruiterForm = () => {
-  const [name, setName] = useState('');
+const UpdateRecruiterDetailsForm = ({ data, handleShowRecruiterForm }) => {
+  const [updateRecruiter, { isLoading, isError }] = useUpdateRecruiterMutation();
+  const { currId, currName, currImageUrl, currContactEmail, currBio, currAts, currRoles, currFund } = data;
+  const [name, setName] = useState(currName);
   const [image, setImage] = useState('');
-  const [contactEmail, setContactEmail] = useState('');
-  const [bio, setBio] = useState('');
-  const [ats, setAts] = useState('');
-  const [roles, setRoles] = useState([]);
-  const [fund, setFund] = useState('');
+  const [contactEmail, setContactEmail] = useState(currContactEmail);
+  const [bio, setBio] = useState(currBio);
+  const [ats, setAts] = useState(currAts);
+  const [roles, setRoles] = useState(currRoles);
+  const [fund, setFund] = useState(currFund);
 
-  const { navigate } = useNavigation();
+  useEffect(() => {
+        document.body.classList.add('overflow-hidden');
+
+        return () => {
+            document.body.classList.remove('overflow-hidden');
+        }
+    }, []);
 
   const options = [
     {value: '', text: '--Choose an option--'},
     {value: 'ats1', text: 'ATS 1'},
     {value: 'ats2', text: 'ATS 2'},
     {value: 'ats3', text: 'ATS 3'},
+    {value: 'Jobvite', text: 'Jobvite'},
   ];
 
   const handleNameChange = (event) => {
@@ -50,43 +60,50 @@ const RecruiterForm = () => {
   }
 
   const handleSubmit = async (event) => {
-    let imageUrl = '';
+    let imageUrl = currImageUrl;
     const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dhoysx4vk/upload';
     const CLOUDINARY_UPLOAD_PRESET = 'work-portal';
 
-    const formData = new FormData();
-    formData.append('file', image);
-    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+    if (image !== "") {
+      const formData = new FormData();
+      formData.append('file', image);
+      formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
 
-    await axios({
-        url: CLOUDINARY_URL,
-        method: 'POST',
-        headers: {
+      try {
+        await axios({
+          url: CLOUDINARY_URL,
+          method: 'POST',
+          headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        data: formData
-    }).then((res) => {
-      imageUrl = res.data.secure_url;
-    }).catch((err) => {
+          },
+          data: formData
+        }).then((res) => {
+          imageUrl = res.data.secure_url;
+        });
+      } catch (err) {
         alert("Error in uploading image!");
-        return;
-    });
+        throw err; // Throw the error to be caught by the outer try-catch
+      }
+    }
 
     const roleList = roles.map(function (el) {
       return el.trim();
     });
 
     try {
-      await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/v1/recruiter`, {name, image: imageUrl, contactEmail, bio, ats, roles: roleList, fund}, {withCredentials: true});
-      navigate("/hire-employees");
+      await updateRecruiter({id: currId, name, image: imageUrl, contactEmail, bio, ats, roles: roleList, fund});
+      if (isError) alert("Error updating details");
+      handleShowRecruiterForm();
     } catch {
       alert("Error!");
     }
   }
 
   return (
-    <div className="max-w-md mx-auto mt-8 p-6 bg-violet-200 shadow-md rounded-md">
-      <h2 className="text-2xl font-bold mb-6 text-violet-700">Registration Form</h2>
+  <div className="w-screen h-screen bg-gray-700 bg-opacity-70 fixed inset-0 z-20 overflow-hidden">
+    <div className="max-w-md mx-auto mt-8 p-6 bg-violet-200 shadow-md rounded-md relative">
+      <div onClick={handleShowRecruiterForm} className='absolute top-4 right-4'><RxCross2 className="w-6 h-6 sm:w-8 sm:h-8 text-violet-700 hover:scale-125 transition" /></div>
+      <h2 className="text-2xl font-bold mb-6 text-violet-700">Update Form</h2>
       <div className="mb-4">
         <label className="block text-violet-700 text-sm font-bold mb-2" htmlFor="name">
           Name
@@ -188,14 +205,22 @@ const RecruiterForm = () => {
         />
       </div>
       <button
-        className="w-full bg-violet-600 hover:bg-violet-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring focus:ring-violet-300 focus:border-violet-500"
+        className={`w-full ${
+          isLoading
+            ? "bg-gray-400 cursor-not-allowed"
+            : "bg-violet-600 hover:bg-violet-700"
+        } text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring ${
+          isLoading ? "" : "focus:ring-violet-300 focus:border-violet-500"
+        }`}
         type="submit"
         onClick={handleSubmit}
+        disabled={isLoading}
       >
-        Submit
+        {isLoading ? "Please wait" : "Submit"}
       </button>
     </div>
+  </div>
   );
 };
 
-export default RecruiterForm;
+export default UpdateRecruiterDetailsForm;

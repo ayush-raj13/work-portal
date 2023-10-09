@@ -4,11 +4,11 @@ const applicationSchema = new mongoose.Schema(
   {
     applicantId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'JobApplicantInfo',
+      ref: 'User',
     },
     jobId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'jobs',
+      ref: 'Job',
     },
     recruiterId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -43,6 +43,10 @@ const applicationSchema = new mongoose.Schema(
         },
         msg: 'Statement of purpose should not be greater than 250 words',
       },
+    },
+    resume: {
+      type: String,
+      required: true,
     },
   },
   { collation: { locale: 'en' } },

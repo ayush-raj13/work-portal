@@ -13,8 +13,8 @@ function Modal({ onClose, actionBar, children }) {
     return ReactDOM.createPortal(
         <div>
             <div onClick={onClose} className="fixed inset-0 bg-gray-300 opacity-80"></div>
-            <div className="fixed inset-10 sm:inset-20 rounded-lg bg-gray-100 border flex flex-col justify-between px-8 py-4 items-center">
-                <div>{children}</div>
+            <div className="fixed inset-[4%] sm:inset-20 rounded-lg bg-gray-100 border flex flex-col justify-between pb-4 items-center">
+                <div className="h-[90%] w-full overflow-y-auto">{children}</div>
                 <div className='flex w-full justify-center items-end'>
                     {actionBar}
                 </div>               

@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 function JobList({ filter, setFilter, resetJobList, setResetJobList }) {
   const [jobList, setJobList] = useState([]);
   const { data, error, isFetching } = useFetchJobsQuery(filter);
-  console.log(useFetchJobsQuery())
 
   useEffect(() => {
     if (resetJobList) {

@@ -18,6 +18,7 @@ router.route('/logout').get((req, res, next) => {
     if (err) {
       return next(err);
     }
+    res.clearCookie();
     res.status(200).send({ done: true });
     return null;
   });

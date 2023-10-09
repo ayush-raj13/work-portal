@@ -26,7 +26,7 @@ async function createUser() {
     email,
     password: 'password',
   };
-  const res = await axios.post('http://localhost:5000/api/v1/user/register', user, {
+  const res = await axios.post(`${process.env.SERVER_URL}/api/v1/user/register`, user, {
     jar: cookieJar, // tough.CookieJar or boolean
     withCredentials: true, // If true, send cookie stored in jar
   });
@@ -35,7 +35,7 @@ async function createUser() {
 }
 
 async function changeToRecruiter() {
-  const res = await axios.patch('http://localhost:5000/api/v1/user/type/recruiter', {}, {
+  const res = await axios.patch(`${process.env.SERVER_URL}/api/v1/user/type/recruiter`, {}, {
     jar: cookieJar, // tough.CookieJar or boolean
     withCredentials: true, // If true, send cookie stored in jar
   });
@@ -60,7 +60,7 @@ async function createRecruiter() {
     fund,
   };
   // api call to local host
-  const res = await axios.post('http://localhost:5000/api/v1/recruiter', recruiter, {
+  const res = await axios.post(`${process.env.SERVER_URL}/api/v1/recruiter`, recruiter, {
     jar: cookieJar, // tough.CookieJar or boolean
     withCredentials: true, // If true, send cookie stored in jar
   });
@@ -104,7 +104,7 @@ async function createJob() {
     country: 'India',
     city,
   };
-  const res = await axios.post('http://localhost:5000/api/v1/jobs/', job, {
+  const res = await axios.post(`${process.env.SERVER_URL}/api/v1/jobs/`, job, {
     jar: cookieJar, // tough.CookieJar or boolean
     withCredentials: true, // If true, send cookie stored in jar
   });
@@ -113,7 +113,7 @@ async function createJob() {
 }
 
 async function logout() {
-  const res = await axios.get('http://localhost:5000/api/v1/user/logout', {
+  const res = await axios.get(`${process.env.SERVER_URL}/api/v1/user/logout`, {
     jar: cookieJar, // tough.CookieJar or boolean
     withCredentials: true, // If true, send cookie stored in jar
   });

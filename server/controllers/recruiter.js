@@ -38,22 +38,41 @@ export const getRecruiter = asyncWrapper(async (req, res) => {
 });
 
 export const getAllRecruiters = asyncWrapper(async (req, res) => {
-  const recruiters = await Recruiter.find({}).populate('recruiterId');
+  const { recruiterId } = req.query;
+  const queryObject = {};
+
+  if (recruiterId) {
+    queryObject.recruiterId = recruiterId;
+  }
+
+  const recruiters = await Recruiter.find({
+    ...queryObject,
+  }).populate('recruiterId');
   res.status(200).json({ recruiters });
 });
 
 export const updateRecruiter = asyncWrapper(async (req, res) => {
   const { id: recruiterId } = req.params;
+  const recruiter = await Recruiter.findOne({ _id: recruiterId });
 
-  const recruiter = await Recruiter.findOneAndUpdate({ _id: recruiterId }, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  if (!recruiter) {
+    return res.status(404).json({ error: 'Recruiter not found' });
+  }
+  if (recruiter.recruiterId.toString() !== req.user.id) {
+    return res.status(403).json({ error: 'Unauthorized' });
+  }
+
+  const updatedRecruiter = await Recruiter.findOneAndUpdate(
+    { _id: recruiterId },
+    req.body,
+    { new: true, runValidators: true },
+  );
+
   if (!recruiter) {
     return res.status(404).json({ msg: `No recruiter with id : ${recruiterId}` });
   }
 
-  return res.status(200).json({ recruiter });
+  return res.status(200).json({ updatedRecruiter });
 });
 
 export const isAuthenticated = async (req, res) => {
