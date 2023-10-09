@@ -60,10 +60,10 @@ app.use(
   session({
     secret: process.env.SOME_LONG_UNGUESSABLE_STRING,
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     store: MongoStore.create({ mongoUrl: url }),
     cookie: {
-      httpOnly: true,
+      httpOnly: false,
       path: '/',
       secure: true,
       maxAge: 3600000 * 24 * 7,
