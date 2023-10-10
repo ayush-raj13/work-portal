@@ -42,6 +42,7 @@ app.use(
   cors({
     origin: process.env.CLIENT_URL, // <-- location of the react app were connecting to
     credentials: true,
+    exposedHeaders: ['Set-cookie'],
   }),
 );
 app.use(cookieParser());
@@ -55,12 +56,14 @@ app.get('/', (req, res) => {
 const PORT = process.env.PORT || 5000;
 const url = process.env.MONGO_URL;
 
+app.set('trust proxy', 1);
+
 // The code-snippet of 'Initializing Session' below should be at this place only
 app.use(
   session({
     secret: process.env.SOME_LONG_UNGUESSABLE_STRING,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: url }),
     cookie: {
       httpOnly: true,
