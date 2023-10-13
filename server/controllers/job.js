@@ -9,7 +9,7 @@ const getAllJobs = asyncWrapper(async (req, res) => {
   // eslint-disable-next-line max-len
   // localhost:5000/api/v1/jobs/?limit=2&next=590e9abd4abbf1165862d342&jobType=Full Time&minSalary=10000&maxSalary=50000&minDuration=3&maxDuration=6&location=Pune&keyword=backend&sort=-salary,duration
   // eslint-disable-next-line max-len
-  const { jobType, minSalary, maxSalary, minDuration, maxDuration, location, keyword, sort, minExperience } = req.query;
+  const { jobType, minSalary, maxSalary, minDuration, maxDuration, location, keyword, sort, minExperience, applicantSkills } = req.query;
   const queryObject = {};
 
   if (jobType) {
@@ -38,6 +38,13 @@ const getAllJobs = asyncWrapper(async (req, res) => {
 
   if (minExperience) {
     queryObject.experience = { $gte: minExperience };
+  }
+
+  if (applicantSkills) {
+    const applicantSkillsArray = applicantSkills.split(',');
+    queryObject.skillsets = {
+      $in: applicantSkillsArray,
+    };
   }
 
   let sortFix = '';

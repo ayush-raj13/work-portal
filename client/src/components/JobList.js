@@ -1,11 +1,25 @@
 import JobCard from "./JobCard";
-import { useFetchJobsQuery } from "../store";
+import { useFetchJobApplicantsQuery, useFetchJobsQuery } from "../store";
 import Skeleton from "./Skeleton";
 import { useEffect, useState } from "react";
+import useAuthTokenContext from "../hooks/use-auth-token";
 
-function JobList({ filter, setFilter, resetJobList, setResetJobList }) {
+function JobList({ filter, setFilter, resetJobList, setResetJobList, showRecommendedJobs }) {
   const [jobList, setJobList] = useState([]);
-  const { data, error, isFetching } = useFetchJobsQuery(filter);
+  const [applicantSkills, setApplicantSkills] = useState([]);
+  const { authToken } = useAuthTokenContext();
+  const { id } = authToken;
+  const { data: applicantData, error: applicantError, isFetching: applicantIsFetching } = useFetchJobApplicantsQuery({applicantId : id});
+  useEffect(() => {
+    setJobList([]);
+    setFilter({...filter, page: 1})
+    if (!showRecommendedJobs)
+      setApplicantSkills([]);
+    else if (applicantData)
+      setApplicantSkills(applicantData.jobApplicants[0].skills)
+  }, [applicantData, showRecommendedJobs, setFilter])
+
+  const { data, error, isFetching } = useFetchJobsQuery({...filter, applicantSkills});
 
   useEffect(() => {
     if (resetJobList) {

@@ -24,6 +24,11 @@ function FindJobsPage() {
   const [location, setLocation] = useState('');
   const [filter, setFilter] = useState({});
   const [resetJobList, setResetJobList] = useState(false);
+  const [showRecommendedJobs, setShowRecommendedJobs] = useState(true);
+
+  const handleRecommendedJobsChange = () => {
+    setShowRecommendedJobs(!showRecommendedJobs);
+  }
 
   const handleJobTypeChange = (event) => {
     setJobType(event.target.value);
@@ -283,7 +288,27 @@ function FindJobsPage() {
       >
         {/* SearchBar */}
         <div className="flex flex-col space-y-8  w-[85%] sm:w-[80%] mt-36">
-          <div className="font-barlow-condensed text-xl sm:text-2xl lg:text-4xl  text-[#D0D6F9] tracking-widest leading-[19.2px] sm:leading-6 lg:leading-[33.6px]">Find Your Dream Jobs Here</div>
+          <div className="flex flex-col space-y-6 sm:flex-row justify-between">  
+            <div className="font-barlow-condensed text-xl sm:text-2xl lg:text-4xl  text-[#D0D6F9] tracking-widest leading-[19.2px] sm:leading-6 lg:leading-[33.6px]">Find Your Dream Jobs Here</div>
+            <div className="flex space-x-2 justify-end sm:justify-start items-center">
+              <label
+                  className="inline-block pl-[0.15rem] hover:cursor-pointer text-[#D0D6F9] text-xs sm:text-lg lg:text-xl font-semibold"
+                  htmlFor="flexSwitchChecked"
+              >{showRecommendedJobs ? 'Recommended Jobs' : 'All Jobs'}</label>
+              <div
+                className="md:w-14 md:h-7 w-12 h-6 flex items-center bg-gray-400 rounded-full p-1 cursor-pointer"
+                onClick={handleRecommendedJobsChange}
+              >
+                {/* Switch */}
+                <div
+                  className={
+                    "bg-black md:w-6 md:h-6 h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out" +
+                    (showRecommendedJobs ? null : " transform translate-x-5")
+                  }
+                ></div>
+              </div>
+            </div>
+          </div>
           <div className="flex bg-white p-2 rounded-r-full rounded-l-full border-[1px] border-black">
             <label className="relative rounded-l-full w-[30%] focus-within:text-gray-600 block">
             <HiOutlineSearch className="pointer-events-none w-4 h-4 sm:w-6 sm:h-6 lg:w-8 lg:h-8 absolute top-1/2 transform -translate-y-1/2 left-2 lg:left-3" />
@@ -310,7 +335,7 @@ function FindJobsPage() {
           points: 2
         }}
       />
-      <JobList filter={filter} setFilter={setFilter} resetJobList={resetJobList} setResetJobList={setResetJobList} />
+      <JobList filter={filter} setFilter={setFilter} resetJobList={resetJobList} setResetJobList={setResetJobList} showRecommendedJobs={showRecommendedJobs} />
       <Footer />
     </div>
   )

@@ -10,7 +10,7 @@ function Provider({ children }) {
   useEffect(() => {
     const interval = setInterval(() => {
       const presenceCookie = cookies.get('user');
-      if (authToken !== presenceCookie) {
+      if (JSON.stringify(authToken) !== JSON.stringify(presenceCookie)) {
         setAuthToken(presenceCookie);
       }
     }, 1000);
