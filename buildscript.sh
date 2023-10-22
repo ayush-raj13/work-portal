@@ -4,7 +4,7 @@
 cd ./server
 
 # Install server dependencies
-npm install
+npm install --legacy-peer-deps
 
 # Optionally, you can install client dependencies here if needed
 cd ../client
