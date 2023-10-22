@@ -8,7 +8,12 @@ function JobList({ filter, setFilter, resetJobList, setResetJobList, showRecomme
   const [jobList, setJobList] = useState([]);
   const [applicantSkills, setApplicantSkills] = useState([]);
   const { authToken } = useAuthTokenContext();
-  const { id } = authToken;
+  if (authToken !== undefined) {
+    var { id } = authToken;
+  } else {
+    var id ='1';
+  }
+    
   const { data: applicantData, error: applicantError, isFetching: applicantIsFetching } = useFetchJobApplicantsQuery({applicantId : id});
   useEffect(() => {
     setJobList([]);
