@@ -14,7 +14,7 @@ const applicationApi = createApi({
     credentials: "include",
     fetchFn: async (...args) => {
       // REMOVE FOR PRODUCTION
-      await pause(3000);
+      // await pause(3000);
       return fetch(...args);
     },
   }),
