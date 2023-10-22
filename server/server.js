@@ -1,6 +1,9 @@
 /* eslint-disable no-undef */
 
 import express from 'express';
+import path from 'path';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import session from 'express-session';
@@ -21,6 +24,9 @@ import applicationRoutes from './routes/applicationRoutes.js';
 
 import notFoundMiddleWare from './middlewares/not-found.js';
 import errorHandleMiddleware from './middlewares/error-handler.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
 dotenv.config();
@@ -46,10 +52,6 @@ app.use(
   }),
 );
 app.use(cookieParser());
-
-app.get('/', (req, res) => {
-  res.send('welcome');
-});
 
 // app.use(notFoundMiddleWare);
 
@@ -128,6 +130,11 @@ app.use('/api/v1/recruiter', RecruiterRoutes);
 
 // application routes
 app.use('/api/v1/applications', applicationRoutes);
+
+app.use(express.static(path.join(__dirname, '../server/clientbuild')));
+app.get('*', (req, res) => {
+  return res.sendFile(path.resolve(__dirname, '../server/clientbuild', 'index.html'));
+});
 
 // Middlewares
 app.use(notFoundMiddleWare);
